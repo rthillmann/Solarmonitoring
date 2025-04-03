@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+<!-- <configuration> -->
+    <property name="LOG_DIR" value="log" />
+
+    <appender name="yieldDayAppender" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/solar_yieldday.log</file>
+        <append>true</append>
+        <immediateFlush>true</immediateFlush>
+        <encoder>
+<!--            <pattern>%d{yyyy-MM-dd, UTC+01:00} %msg%n</pattern>-->
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="applicationAppender" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/SolarMonitoring.log</file>
+        <append>true</append>
+        <immediateFlush>true</immediateFlush>
+        <encoder>
+            <!--            <pattern>%d{yyyy-MM-dd, UTC+01:00} %msg%n</pattern>-->
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="powerAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/solar_power.log</file>
+        <immediateFlush>true</immediateFlush>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <!-- <fileNamePattern>${LOG_DIR}/solar_power.%d{yyyy-MM-dd, Europe/Berlin}.log</fileNamePattern> -->
+            <fileNamePattern>${LOG_DIR}/solar_power.%d{yyyy-MM-dd, Etc/GMT-1}.log</fileNamePattern>
+
+
+            <!-- <fileNamePattern>${LOG_DIR}/solar_power.%d{yyyy-MM-dd, Europe/Berlin}.log</fileNamePattern> Summertime -->
+
+            <!-- <fileNamePattern>${LOG_DIR}/solar_power.%d{yyyy-MM-dd, Europe/Berlin}.log</fileNamePattern> -->
+            <!-- <fileNamePattern>${LOG_DIR}/solar_power.%d{yyyy-MM-dd, UTC+01:00}.log</fileNamePattern> -->
+
+            <!-- keep 30 days' worth of history capped at 3GB total size
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>3GB</totalSizeCap> -->
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+                <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="YieldDayLogger" level="info"  additivity="false">
+        <appender-ref ref="yieldDayAppender"/>
+    </logger>
+
+    <logger name="PowerLogger" level="info"  additivity="false">
+        <appender-ref ref="powerAppender"/>
+        <appender-ref ref="consoleAppender"/>
+    </logger>
+
+    <logger name="ApplicationLogger" level="info"  additivity="false">
+        <appender-ref ref="applicationAppender"/>
+        <appender-ref ref="consoleAppender"/>
+    </logger>
+
+    <root level="debug">
+        <appender-ref ref="yieldDayAppender"/>
+        <appender-ref ref="powerAppender"/>
+        <appender-ref ref="applicationAppender"/>
+        <!-- <appender-ref ref="consoleAppender"/> -->
+    </root>
+
+</configuration>
