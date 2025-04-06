@@ -78,8 +78,8 @@ mkdir log
 - MacOS: On my iMAC I have to use e.g. caffeinate to prevent it from going to some sleeping-mode in the night and therefor loosing data:
 
 ``` java 
-  caffeinate java -jar SolarMonitoring [-log {interval}] {OpenDTU-server-URL}
-  e.g. caffeinate java -jar SolarMonitoring -log 1 192.168.1.99
+  caffeinate java -jar SolarMonitoring {OpenDTU-server-URL}
+  e.g. caffeinate java -jar SolarMonitoring 192.168.1.99
 ```
 
 
